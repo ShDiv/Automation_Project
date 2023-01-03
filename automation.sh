@@ -12,3 +12,13 @@ sudo apt install awscli -y
 sudo aws s3 \
 	cp /tmp/$file \
 	s3://$s3_bucket/$file
+
+dir="/var/www/html"
+
+log_size=`du -h /tmp/$file`
+echo -e "LogType TimeCreated Type Size">>${dir}/inventory.html
+
+echo -e httpd-logs $timestamp tar ${log_size}>>${dir}/inventory.html
+
+
+echo "0 10 * * * root /root/automation.sh" >> /etc/cron.d/automation
